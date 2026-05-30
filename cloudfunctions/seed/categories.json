@@ -1,0 +1,32 @@
+[
+  {
+    "_id": "cat_hot",
+    "shopId": "default_shop",
+    "name": "🔥 热销推荐",
+    "sort": 1
+  },
+  {
+    "_id": "cat_burger",
+    "shopId": "default_shop",
+    "name": "🍔 汉堡",
+    "sort": 2
+  },
+  {
+    "_id": "cat_snack",
+    "shopId": "default_shop",
+    "name": "🍟 小食",
+    "sort": 3
+  },
+  {
+    "_id": "cat_drink",
+    "shopId": "default_shop",
+    "name": "🥤 饮品",
+    "sort": 4
+  },
+  {
+    "_id": "cat_dessert",
+    "shopId": "default_shop",
+    "name": "🍰 甜品",
+    "sort": 5
+  }
+]

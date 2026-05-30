@@ -1,0 +1,129 @@
+/* ═══════════════════════════════════════════
+   趣味点餐 — 全局样式
+   设计语言：温馨治愈 × 活力玩趣
+   ═══════════════════════════════════════════ */
+
+/* ====== 设计 Token ====== */
+page {
+  /* 主色调 */
+  --color-primary: #F26B5E;
+  --color-primary-light: #FDD8D0;
+  --color-primary-dark: #C94D3A;
+  --color-primary-bg: #FEF1ED;
+
+  /* 趣味点缀色 */
+  --color-playful-teal: #5BC0BE;
+  --color-playful-yellow: #F9D56E;
+  --color-playful-pink: #F7A9A8;
+
+  /* 中性色（暖调基底） */
+  --bg-page: #FEF8F5;
+  --bg-surface: #FFFFFF;
+  --bg-card: #FFFAF7;
+  --border-light: #F5EDE8;
+  --border-medium: #E8DCD4;
+  --text-primary: #3D2C25;
+  --text-secondary: #8C7A72;
+  --text-tertiary: #B5A59C;
+  --text-white: #FFFFFF;
+
+  /* 语义色 */
+  --color-success: #6BC47A;
+  --color-warning: #F9A825;
+  --color-error: #E8574A;
+
+  /* 间距 */
+  --space-xs: 8rpx;
+  --space-sm: 12rpx;
+  --space-md: 16rpx;
+  --space-lg: 24rpx;
+  --space-xl: 32rpx;
+  --space-2xl: 48rpx;
+
+  /* 圆角 */
+  --radius-sm: 12rpx;
+  --radius-md: 16rpx;
+  --radius-lg: 20rpx;
+  --radius-xl: 24rpx;
+  --radius-full: 999rpx;
+
+  /* 阴影 */
+  --shadow-sm: 0 2rpx 8rpx rgba(242, 107, 94, 0.04);
+  --shadow-md: 0 4rpx 20rpx rgba(242, 107, 94, 0.06);
+  --shadow-lg: 0 8rpx 32rpx rgba(242, 107, 94, 0.08);
+
+  /* 排版 */
+  --text-caption: 22rpx;
+  --text-body-sm: 24rpx;
+  --text-body: 26rpx;
+  --text-subhead: 28rpx;
+  --text-heading: 32rpx;
+  --text-display: 40rpx;
+
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  font-size: var(--text-body);
+  line-height: 1.5;
+}
+
+/* ====== 全局工具类 ====== */
+.flex-row { display: flex; flex-direction: row; align-items: center; }
+.flex-col { display: flex; flex-direction: column; }
+.flex-1 { flex: 1; }
+.flex-center { display: flex; align-items: center; justify-content: center; }
+.text-ellipsis { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.text-center { text-align: center; }
+.w-full { width: 100%; }
+
+/* 价格文案 */
+.price {
+  color: var(--color-primary);
+  font-weight: 600;
+  font-size: var(--text-body);
+}
+
+.price-amount {
+  font-size: var(--text-heading);
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+/* ====== 全局动画 ====== */
+@keyframes popIn {
+  0% { transform: scale(0); opacity: 0; }
+  60% { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes floatUp {
+  from { opacity: 0; transform: translateY(20rpx); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30rpx); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ====== 全局按钮重置 ====== */
+button {
+  padding: 0;
+  margin: 0;
+  background: none;
+  border: none;
+  line-height: inherit;
+  font-size: inherit;
+}
+
+button::after { border: none; }

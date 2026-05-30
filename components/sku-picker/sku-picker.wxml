@@ -1,0 +1,55 @@
+<!-- components/sku-picker/sku-picker.wxml — 规格选择器 -->
+<view class="sku-mask" wx:if="{{visible}}" bindtap="onClose"></view>
+<view class="sku-picker {{visible ? 'sku-picker--show' : ''}}" wx:if="{{product}}">
+  <!-- 顶部拖拽条 -->
+  <view class="sku-picker__handle"></view>
+
+  <!-- 商品头部 -->
+  <view class="sku-picker__header">
+    <image class="sku-picker__image" src="{{product.image}}" mode="aspectFill" />
+    <view class="sku-picker__header-info">
+      <text class="sku-picker__name">{{product.name}}</text>
+      <text class="sku-picker__price">¥{{currentPrice || product.price}}</text>
+    </view>
+    <view class="sku-picker__close" bindtap="onClose">✕</view>
+  </view>
+
+  <!-- 规格选择 -->
+  <scroll-view class="sku-picker__body" scroll-y>
+    <view class="sku-picker__group" wx:for="{{product.skus}}" wx:for-item="skuGroup" wx:for-index="groupIdx" wx:key="name">
+      <text class="sku-picker__group-name">{{skuGroup.name}}</text>
+      <view class="sku-picker__options">
+        <view
+          class="sku-picker__option {{selectedSpecs[groupIdx] === idx ? 'sku-picker__option--active' : ''}}"
+          wx:for="{{skuGroup.options}}"
+          wx:for-item="opt"
+          wx:for-index="idx"
+          wx:key="value"
+          bindtap="onSelectSpec"
+          data-group="{{groupIdx}}"
+          data-index="{{idx}}"
+          data-price="{{opt.price}}"
+        >
+          <text>{{opt.value}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 数量 -->
+    <view class="sku-picker__qty">
+      <text class="sku-picker__group-name">数量</text>
+      <view class="sku-picker__qty-ctrl">
+        <view class="sku-picker__qty-btn" bindtap="onDecreaseQty">−</view>
+        <text class="sku-picker__qty-num">{{quantity}}</text>
+        <view class="sku-picker__qty-btn sku-picker__qty-btn--primary" bindtap="onIncreaseQty">+</view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 确认按钮 -->
+  <view class="sku-picker__footer">
+    <view class="sku-picker__confirm" bindtap="onConfirm">
+      <text>确认加入</text>
+    </view>
+  </view>
+</view>

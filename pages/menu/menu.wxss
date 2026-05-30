@@ -1,0 +1,182 @@
+/* ═══════════════════════════════════════════
+   pages/menu/menu.wxss — 菜单页样式
+   设计：温暖治愈 × 活力玩趣
+   ═══════════════════════════════════════════ */
+
+/* ====== 页面容器 ====== */
+.menu-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: var(--bg-page);
+}
+
+/* ====== 搜索栏 ====== */
+.menu-search {
+  padding: 20rpx 24rpx;
+  background: linear-gradient(135deg, #F26B5E 0%, #F48C7A 100%);
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.menu-search__input-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: var(--radius-full);
+  padding: 12rpx 20rpx;
+  gap: 10rpx;
+  backdrop-filter: blur(4px);
+}
+
+.menu-search__icon {
+  font-size: 28rpx;
+  line-height: 1;
+}
+
+.menu-search__input {
+  flex: 1;
+  font-size: var(--text-body);
+  color: var(--text-primary);
+  height: 44rpx;
+  padding: 0;
+}
+
+.menu-search__share {
+  width: 72rpx;
+  height: 72rpx;
+  padding: 0;
+  margin: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.menu-search__share:active {
+  transform: scale(0.92);
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.menu-search__share-icon {
+  font-size: 32rpx;
+  line-height: 1;
+}
+
+/* ====== 主内容区 ====== */
+.menu-body {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+/* ====== 左侧分类导航 ====== */
+.menu-categories {
+  width: 176rpx;
+  background: #FAF3EF;
+  height: 100%;
+  padding: var(--space-sm) 0;
+}
+
+.menu-categories__item {
+  padding: 24rpx 20rpx;
+  font-size: var(--text-body-sm);
+  color: var(--text-secondary);
+  text-align: center;
+  position: relative;
+  margin: 4rpx 12rpx;
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
+}
+
+.menu-categories__item--active {
+  background: var(--color-primary);
+  color: var(--text-white);
+  font-weight: 600;
+  box-shadow: 0 4rpx 12rpx rgba(242, 107, 94, 0.3);
+}
+
+.menu-categories__name {
+  display: block;
+  line-height: 1.4;
+}
+
+/* ====== 右侧商品列表 ====== */
+.menu-products {
+  flex: 1;
+  height: 100%;
+  padding: 0 var(--space-md);
+  box-sizing: border-box;
+}
+
+/* 分类标题 */
+.menu-products__section {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: 28rpx 0 16rpx;
+}
+
+.menu-products__section-line {
+  flex: 1;
+  height: 1rpx;
+  background: linear-gradient(to right, transparent, var(--border-light), transparent);
+}
+
+.menu-products__section-title {
+  font-size: var(--text-body-sm);
+  font-weight: 600;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+  letter-spacing: 2rpx;
+}
+
+/* 到底提示 */
+.menu-products__footer {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: 40rpx 0 32rpx;
+}
+
+.menu-products__footer-line {
+  flex: 1;
+  height: 1rpx;
+  background: linear-gradient(to right, transparent, var(--border-light), transparent);
+}
+
+.menu-products__footer-text {
+  font-size: var(--text-caption);
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+}
+
+/* ====== 无数据状态 ====== */
+.menu-empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2xl);
+}
+
+.menu-empty__icon {
+  font-size: 80rpx;
+  margin-bottom: var(--space-lg);
+}
+
+.menu-empty__text {
+  font-size: var(--text-body);
+  color: var(--text-tertiary);
+}
+
+/* ====== 进入动画 ====== */
+.menu-page {
+  animation: fadeIn 0.3s ease;
+}

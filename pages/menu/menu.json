@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "menu-item": "../../components/menu-item/menu-item",
+    "cart-bar": "../../components/cart-bar/cart-bar",
+    "lucky-recommend": "../../components/lucky-recommend/lucky-recommend",
+    "sku-picker": "../../components/sku-picker/sku-picker"
+  },
+  "navigationBarTitleText": "趣味点餐"
+}

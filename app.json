@@ -1,0 +1,19 @@
+{
+  "pages": [
+    "pages/menu/menu",
+    "pages/order-confirm/order-confirm",
+    "pages/order-detail/order-detail"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#F26B5E",
+    "navigationBarTitleText": "趣味点餐",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#FEF8F5",
+    "backgroundTextStyle": "dark"
+  },
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents",
+  "usingComponents": {},
+  "permission": {},
+  "requiredPrivateInfos": []
+}

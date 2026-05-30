@@ -1,0 +1,95 @@
+<!-- ═══════════════════════════════════════════
+   pages/menu/menu.wxml — 菜单页（首页）
+   设计语言：温馨治愈 × 活力玩趣
+   ═══════════════════════════════════════════ -->
+
+<view class="menu-page">
+
+  <!-- ====== 顶部：搜索栏 ====== -->
+  <view class="menu-search">
+    <view class="menu-search__input-wrap">
+      <text class="menu-search__icon">🔍</text>
+      <input
+        class="menu-search__input"
+        placeholder="搜搜想吃点什么..."
+        placeholder-style="color: #B5A59C; font-size: 26rpx;"
+        confirm-type="search"
+        bindinput="onSearchInput"
+        bindconfirm="onSearchConfirm"
+      />
+    </view>
+    <button class="menu-search__share" open-type="share" aria-label="分享给好友">
+      <text class="menu-search__share-icon">📤</text>
+    </button>
+  </view>
+
+  <!-- ====== 今日幸运推荐 ====== -->
+  <lucky-recommend
+    products="{{allProducts}}"
+    bind:cartchange="onCartChange"
+    bind:selectsku="onSelectSku"
+  />
+
+  <!-- ====== 主内容区 ====== -->
+  <view class="menu-body">
+    <!-- 左侧分类导航 -->
+    <scroll-view class="menu-categories" scroll-y scroll-into-view="cat-{{scrollToCategory}}">
+      <view
+        class="menu-categories__item {{activeCategory === index ? 'menu-categories__item--active' : ''}}"
+        wx:for="{{categories}}"
+        wx:key="_id"
+        data-index="{{index}}"
+        bindtap="onCategoryTap"
+      >
+        <text class="menu-categories__name">{{item.name}}</text>
+      </view>
+    </scroll-view>
+
+    <!-- 右侧菜品列表 -->
+    <scroll-view
+      class="menu-products"
+      scroll-y
+      scroll-into-view="{{scrollToProduct}}"
+      bindscroll="onProductScroll"
+    >
+      <view wx:for="{{categories}}" wx:key="_id" id="cat-{{index}}">
+        <!-- 分类标题 -->
+        <view class="menu-products__section">
+          <view class="menu-products__section-line"></view>
+          <text class="menu-products__section-title">{{item.name}}</text>
+          <view class="menu-products__section-line"></view>
+        </view>
+
+        <!-- 商品卡片 -->
+        <menu-item
+          wx:for="{{item.products}}"
+          wx:for-item="product"
+          wx:key="_id"
+          product="{{product}}"
+          bind:cartchange="onCartChange"
+          bind:selectsku="onSelectSku"
+          bind:tapitem="onTapItem"
+        />
+      </view>
+
+      <!-- 到底提示 -->
+      <view class="menu-products__footer">
+        <view class="menu-products__footer-line"></view>
+        <text class="menu-products__footer-text">已经到底啦</text>
+        <view class="menu-products__footer-line"></view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- ====== 底部购物车栏 ====== -->
+  <cart-bar bind:checkout="onCheckout" alwaysShow="{{true}}" />
+
+  <!-- ====== 规格选择器弹窗 ====== -->
+  <sku-picker
+    visible="{{showSkuPicker}}"
+    product="{{skuProduct}}"
+    bind:confirm="onSkuConfirm"
+    bind:close="onSkuClose"
+  />
+
+</view>

@@ -1,0 +1,33 @@
+<!-- components/menu-item/menu-item.wxml — 商品卡片组件 -->
+<view class="mi-card" bindtap="onTap">
+  <!-- 商品图片 -->
+  <image class="mi-card__image" src="{{product.image}}" mode="aspectFill" lazy-load />
+
+  <!-- 商品信息 -->
+  <view class="mi-card__info">
+    <text class="mi-card__name">{{product.name}}</text>
+    <text class="mi-card__desc" wx:if="{{product.description}}">{{product.description}}</text>
+
+    <!-- 标签 -->
+    <view class="mi-card__tags" wx:if="{{product.tags && product.tags.length}}">
+      <text class="mi-card__tag" wx:for="{{product.tags}}" wx:for-item="tag" wx:key="*this">{{tag}}</text>
+    </view>
+
+    <!-- 底部：价格 + 数量控制 -->
+    <view class="mi-card__bottom">
+      <text class="mi-card__price">¥{{product.price}}</text>
+      <view class="mi-card__ctrl">
+        <!-- 减号（有数量时出现） -->
+        <view class="mi-card__minus {{quantity > 0 ? 'mi-card__minus--show' : ''}}" catchtap="onMinus">
+          <text class="mi-card__minus-icon">−</text>
+        </view>
+        <!-- 数量 -->
+        <text class="mi-card__qty {{quantity > 0 ? 'mi-card__qty--show' : ''}}">{{quantity}}</text>
+        <!-- 加号 -->
+        <view class="mi-card__add" catchtap="onAdd">
+          <text class="mi-card__add-icon">+</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

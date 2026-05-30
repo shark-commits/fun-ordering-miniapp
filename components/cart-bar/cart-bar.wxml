@@ -1,0 +1,46 @@
+<!-- components/cart-bar/cart-bar.wxml — 底部购物车栏 -->
+<view class="cb {{isEmpty ? 'cb--empty' : ''}}" wx:if="{{!isEmpty || alwaysShow}}">
+  <!-- 购物车图标 + 角标 -->
+  <view class="cb__icon-wrap" bindtap="onTapCart">
+    <view class="cb__icon-bg">
+      <text class="cb__icon-emoji">🛒</text>
+    </view>
+    <view class="cb__badge" wx:if="{{totalCount > 0}}">{{totalCount > 99 ? '99+' : totalCount}}</view>
+  </view>
+
+  <!-- 价格 -->
+  <view class="cb__price-wrap">
+    <text class="cb__price">¥{{totalPrice}}</text>
+    <text class="cb__tip" wx:if="{{isEmpty}}">选点好吃的吧~</text>
+  </view>
+
+  <!-- 去结算按钮 -->
+  <view class="cb__btn {{isEmpty ? 'cb__btn--disabled' : ''}}" bindtap="onTapCheckout">
+    <text class="cb__btn-text">去结算</text>
+  </view>
+</view>
+
+<!-- 遮罩层 -->
+<view class="cb__mask" wx:if="{{showPopup}}" bindtap="onClosePopup"></view>
+
+<!-- 购物车弹层 -->
+<view class="cb__popup {{showPopup ? 'cb__popup--show' : ''}}">
+  <view class="cb__popup-header">
+    <text class="cb__popup-title">已选清单</text>
+    <text class="cb__popup-clear" bindtap="onClearCart">清空</text>
+  </view>
+  <scroll-view class="cb__popup-list" scroll-y>
+    <view class="cb__popup-item" wx:for="{{items}}" wx:key="cartKey">
+      <view class="cb__popup-info">
+        <text class="cb__popup-name">{{item.name}}</text>
+        <text class="cb__popup-spec" wx:if="{{item.specsText}}">{{item.specsText}}</text>
+      </view>
+      <text class="cb__popup-price">¥{{item.price * item.quantity}}</text>
+      <view class="cb__popup-ctrl">
+        <view class="cb__popup-minus" bindtap="onDecrease" data-id="{{item.productId}}" data-key="{{item.specKey}}">−</view>
+        <text class="cb__popup-qty">{{item.quantity}}</text>
+        <view class="cb__popup-plus" bindtap="onIncrease" data-id="{{item.productId}}" data-key="{{item.specKey}}">+</view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

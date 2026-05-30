@@ -1,0 +1,95 @@
+<!-- ═══════════════════════════════════════════
+   pages/order-detail/order-detail.wxml — 订单详情页
+   设计语言：温馨治愈 × 活力玩趣
+   ═══════════════════════════════════════════ -->
+
+<view class="detail-page">
+
+  <!-- ====== 支付成功状态 ====== -->
+  <view class="detail-success" wx:if="{{paid}}">
+    <view class="detail-success__icon-wrap">
+      <view class="detail-success__icon">✓</view>
+    </view>
+    <text class="detail-success__text">预约成功！</text>
+    <text class="detail-success__sub">正在为你安排中~</text>
+  </view>
+
+  <!-- ====== 订单信息卡片 ====== -->
+  <view class="detail-card">
+    <view class="detail-card__header">
+      <text class="detail-card__order-no">订单号：{{order.orderNo}}</text>
+      <view class="detail-card__status {{order.status === 'done' ? 'detail-card__status--done' : ''}}">
+        <view class="detail-card__status-dot"></view>
+        <text>{{statusText}}</text>
+      </view>
+    </view>
+
+    <!-- 商品列表 -->
+    <view class="detail-item" wx:for="{{order.items}}" wx:key="productId">
+      <image class="detail-item__image" src="{{item.image}}" mode="aspectFill" />
+      <view class="detail-item__info">
+        <text class="detail-item__name">{{item.name}}</text>
+        <text class="detail-item__spec" wx:if="{{item.specsText}}">{{item.specsText}}</text>
+      </view>
+      <view class="detail-item__right">
+        <text class="detail-item__price">¥{{item.price}}</text>
+        <text class="detail-item__qty">×{{item.quantity}}</text>
+      </view>
+    </view>
+
+    <!-- 备注 -->
+    <view class="detail-remark" wx:if="{{order.remark}}">
+      <text class="detail-remark__label">💬 备注</text>
+      <text class="detail-remark__text">{{order.remark}}</text>
+    </view>
+
+    <!-- 分隔线 -->
+    <view class="detail-divider"></view>
+
+    <!-- 实付金额 -->
+    <view class="detail-total">
+      <text class="detail-total__label">实付金额</text>
+      <text class="detail-total__price">¥{{order.totalPrice}}</text>
+    </view>
+  </view>
+
+  <!-- ====== 时间信息 ====== -->
+  <view class="detail-card" wx:if="{{order.createTime}}">
+    <view class="detail-time">
+      <text class="detail-time__label">🕐 下单时间</text>
+      <text class="detail-time__value">{{order.createTime}}</text>
+    </view>
+  </view>
+
+  <!-- ====== 底部操作按钮 ====== -->
+  <view class="detail-footer">
+    <view class="detail-footer__btn detail-footer__btn--back" bindtap="onBackHome">
+      <text>回到首页</text>
+    </view>
+    <view class="detail-footer__btn detail-footer__btn--poster" bindtap="onCreatePoster">
+      <text>分享海报</text>
+    </view>
+    <view class="detail-footer__btn detail-footer__btn--reorder" bindtap="onReorder">
+      <text>再约一次</text>
+    </view>
+  </view>
+
+  <!-- ====== 分享海报弹窗 ====== -->
+  <view class="poster-mask" wx:if="{{showPoster}}" bindtap="onClosePoster"></view>
+  <view class="poster-popup" wx:if="{{showPoster}}">
+    <view class="poster-popup__handle"></view>
+    <view class="poster-popup__title">分享给朋友</view>
+    <image class="poster-popup__image" src="{{posterImage}}" mode="widthFix" />
+    <view class="poster-popup__actions">
+      <view class="poster-popup__btn poster-popup__btn--save" bindtap="onSavePoster">保存到相册</view>
+      <view class="poster-popup__btn poster-popup__btn--share">
+        <button open-type="share" class="poster-popup__share-inner">分享给好友</button>
+      </view>
+    </view>
+    <view class="poster-popup__close" bindtap="onClosePoster">✕</view>
+  </view>
+
+  <!-- 隐藏 Canvas 用于生成海报 -->
+  <canvas type="2d" id="posterCanvas" class="poster-canvas"></canvas>
+
+</view>

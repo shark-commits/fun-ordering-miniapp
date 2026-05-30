@@ -1,0 +1,78 @@
+<!-- ═══════════════════════════════════════════
+   pages/order-confirm/order-confirm.wxml — 订单确认页
+   设计语言：温馨治愈 × 活力玩趣
+   ═══════════════════════════════════════════ -->
+
+<view class="confirm-page">
+
+  <!-- ====== 页面头部 ====== -->
+  <view class="confirm-header">
+    <view class="confirm-header__back" bindtap="onBack" aria-label="返回菜单">
+      <text class="confirm-header__back-icon">←</text>
+    </view>
+    <text class="confirm-header__title">确认订单</text>
+    <view class="confirm-header__spacer"></view>
+  </view>
+
+  <!-- ====== 预约清单 ====== -->
+  <view class="confirm-section">
+    <view class="confirm-section__header">
+      <text class="confirm-section__icon">📋</text>
+      <text class="confirm-section__title">预约清单</text>
+      <text class="confirm-section__count">{{items.length}}件</text>
+    </view>
+
+    <view class="confirm-item" wx:for="{{items}}" wx:key="productId" wx:for-item="item">
+      <image class="confirm-item__image" src="{{item.image}}" mode="aspectFill" />
+      <view class="confirm-item__info">
+        <text class="confirm-item__name">{{item.name}}</text>
+        <text class="confirm-item__spec" wx:if="{{item.specsText}}">{{item.specsText}}</text>
+      </view>
+      <view class="confirm-item__right">
+        <text class="confirm-item__price">¥{{item.price}}</text>
+        <text class="confirm-item__qty">×{{item.quantity}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- ====== 备注 ====== -->
+  <view class="confirm-section">
+    <view class="confirm-section__header">
+      <text class="confirm-section__icon">✏️</text>
+      <text class="confirm-section__title">备注</text>
+    </view>
+    <textarea
+      class="confirm-remark"
+      placeholder="有什么想备注的？比如：少辣、不要葱..."
+      placeholder-style="color: #B5A59C; font-size: 26rpx;"
+      value="{{remark}}"
+      bindinput="onRemarkInput"
+      maxlength="200"
+    />
+  </view>
+
+  <!-- ====== 价格汇总 ====== -->
+  <view class="confirm-section confirm-section--price">
+    <view class="confirm-price-row">
+      <text class="confirm-price-row__label">小计</text>
+      <text class="confirm-price-row__value">¥{{totalPrice}}</text>
+    </view>
+    <view class="confirm-price-divider"></view>
+    <view class="confirm-price-row confirm-price-row--total">
+      <text class="confirm-price-row__label">合计</text>
+      <text class="confirm-price-row__amount">¥{{totalPrice}}</text>
+    </view>
+  </view>
+
+  <!-- ====== 底部固定栏 ====== -->
+  <view class="confirm-footer">
+    <view class="confirm-footer__left">
+      <text class="confirm-footer__label">合计</text>
+      <text class="confirm-footer__price">¥{{totalPrice}}</text>
+    </view>
+    <view class="confirm-footer__btn" bindtap="onSubmit">
+      <text class="confirm-footer__btn-text">提交订单</text>
+    </view>
+  </view>
+
+</view>

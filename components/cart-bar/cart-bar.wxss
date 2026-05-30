@@ -1,0 +1,257 @@
+/* components/cart-bar/cart-bar.wxss — 购物车栏样式 */
+.cb {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 110rpx;
+  padding-bottom: env(safe-area-inset-bottom);
+  background: linear-gradient(135deg, #3D2C25 0%, #5A4038 100%);
+  display: flex;
+  align-items: center;
+  padding: 0 var(--space-lg);
+  z-index: 100;
+  box-shadow: 0 -4rpx 20rpx rgba(61, 44, 37, 0.15);
+}
+
+/* 购物车图标 */
+.cb__icon-wrap {
+  position: relative;
+  width: 100rpx;
+  height: 100rpx;
+  margin-top: -30rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cb__icon-bg {
+  width: 88rpx;
+  height: 88rpx;
+  background: linear-gradient(135deg, var(--color-primary) 0%, #F48C7A 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 16rpx rgba(242, 107, 94, 0.35);
+  border: 4rpx solid #3D2C25;
+}
+
+.cb__icon-emoji {
+  font-size: 36rpx;
+  line-height: 1;
+}
+
+.cb__badge {
+  position: absolute;
+  top: 2rpx;
+  right: 4rpx;
+  background: var(--color-playful-yellow);
+  color: var(--text-primary);
+  font-size: 20rpx;
+  font-weight: 700;
+  min-width: 34rpx;
+  height: 34rpx;
+  line-height: 34rpx;
+  text-align: center;
+  border-radius: 17rpx;
+  padding: 0 8rpx;
+  box-shadow: 0 2rpx 6rpx rgba(0, 0, 0, 0.15);
+}
+
+/* 价格区域 */
+.cb__price-wrap {
+  flex: 1;
+  margin-left: var(--space-md);
+}
+
+.cb__price {
+  color: var(--text-white);
+  font-size: 38rpx;
+  font-weight: 700;
+}
+
+.cb__tip {
+  color: var(--text-tertiary);
+  font-size: var(--text-caption);
+  margin-left: var(--space-sm);
+}
+
+/* 结算按钮 */
+.cb__btn {
+  background: linear-gradient(135deg, var(--color-primary) 0%, #F48C7A 100%);
+  color: var(--text-white);
+  font-size: var(--text-subhead);
+  font-weight: 600;
+  padding: 0 40rpx;
+  height: 76rpx;
+  line-height: 76rpx;
+  border-radius: var(--radius-full);
+  text-align: center;
+  box-shadow: 0 4rpx 16rpx rgba(242, 107, 94, 0.3);
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+
+.cb__btn:active {
+  transform: scale(0.95);
+}
+
+.cb__btn--disabled {
+  background: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.4);
+  box-shadow: none;
+}
+
+.cb__btn-text {
+  display: block;
+}
+
+/* 遮罩 */
+.cb__mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 110rpx;
+  background: rgba(61, 44, 37, 0.4);
+  z-index: 99;
+  animation: fadeIn 0.15s ease;
+}
+
+/* 购物车弹层 */
+.cb__popup {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 110rpx;
+  padding-bottom: env(safe-area-inset-bottom);
+  background: var(--bg-surface);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+  z-index: 100;
+  box-shadow: 0 -8rpx 32rpx rgba(61, 44, 37, 0.1);
+}
+
+.cb__popup--show {
+  max-height: 620rpx;
+}
+
+.cb__popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-lg);
+  border-bottom: 1rpx solid var(--border-light);
+}
+
+.cb__popup-title {
+  font-size: var(--text-subhead);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.cb__popup-clear {
+  font-size: var(--text-body-sm);
+  color: var(--text-tertiary);
+  padding: 8rpx 16rpx;
+  border-radius: var(--radius-full);
+  transition: all 0.15s ease;
+}
+
+.cb__popup-clear:active {
+  background: var(--border-light);
+}
+
+.cb__popup-list {
+  max-height: 500rpx;
+}
+
+.cb__popup-item {
+  display: flex;
+  align-items: center;
+  padding: var(--space-md) var(--space-lg);
+  border-bottom: 1rpx solid #FAF3EF;
+}
+
+.cb__popup-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.cb__popup-name {
+  font-size: var(--text-body);
+  color: var(--text-primary);
+  display: block;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cb__popup-spec {
+  font-size: var(--text-caption);
+  color: var(--text-tertiary);
+  display: block;
+  margin-top: 2rpx;
+}
+
+.cb__popup-price {
+  color: var(--color-primary);
+  font-size: var(--text-body);
+  font-weight: 600;
+  margin-right: var(--space-md);
+  flex-shrink: 0;
+}
+
+.cb__popup-ctrl {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  flex-shrink: 0;
+}
+
+.cb__popup-minus,
+.cb__popup-plus {
+  width: 44rpx;
+  height: 44rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+  font-weight: 600;
+  line-height: 1;
+  transition: all 0.15s ease;
+}
+
+.cb__popup-minus {
+  border: 2rpx solid var(--border-medium);
+  color: var(--text-secondary);
+}
+
+.cb__popup-minus:active {
+  background: var(--border-light);
+  transform: scale(0.9);
+}
+
+.cb__popup-plus {
+  background: linear-gradient(135deg, var(--color-primary) 0%, #F48C7A 100%);
+  color: var(--text-white);
+  box-shadow: 0 2rpx 8rpx rgba(242, 107, 94, 0.2);
+}
+
+.cb__popup-plus:active {
+  transform: scale(0.9);
+}
+
+.cb__popup-qty {
+  font-size: var(--text-body);
+  color: var(--text-primary);
+  min-width: 30rpx;
+  text-align: center;
+  font-weight: 500;
+}
