@@ -1,7 +1,7 @@
 <!-- components/menu-item/menu-item.wxml — 商品卡片组件 -->
 <view class="mi-card" bindtap="onTap">
   <!-- 商品图片 -->
-  <image class="mi-card__image" src="{{product.image}}" mode="aspectFill" lazy-load />
+  <image class="mi-card__image" src="{{product.image}}" mode="aspectFill" binderror="onImageError" />
 
   <!-- 商品信息 -->
   <view class="mi-card__info">

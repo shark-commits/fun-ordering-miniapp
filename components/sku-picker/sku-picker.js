@@ -21,9 +21,9 @@ Component({
 
   observers: {
     'product': function (product) {
-      if (product && product.skus) {
+      if (product && product.specs) {
         // 初始化选中状态
-        const selectedSpecs = product.skus.map(() => 0)
+        const selectedSpecs = product.specs.map(() => 0)
         this.setData({ selectedSpecs, quantity: 1 })
         this.calcPrice(selectedSpecs)
       }
@@ -33,11 +33,11 @@ Component({
   methods: {
     calcPrice(selectedSpecs) {
       const product = this.data.product
-      if (!product || !product.skus) return
+      if (!product || !product.specs) return
       // 取最后一个规格的价格作为显示价
-      const lastGroupIdx = product.skus.length - 1
+      const lastGroupIdx = product.specs.length - 1
       const optIdx = selectedSpecs[lastGroupIdx] || 0
-      const price = product.skus[lastGroupIdx].options[optIdx]?.price || product.price
+      const price = product.specs[lastGroupIdx].options[optIdx]?.price || product.price
       this.setData({ currentPrice: price })
     },
 
@@ -64,7 +64,7 @@ Component({
       if (!product) return
 
       // 构建选中规格
-      const specs = product.skus.map((group, idx) => ({
+      const specs = product.specs.map((group, idx) => ({
         name: group.name,
         value: group.options[selectedSpecs[idx]]?.value || '',
       }))
@@ -81,6 +81,10 @@ Component({
 
     onClose() {
       this.triggerEvent('close')
+    },
+
+    onImageError(e) {
+      console.error('[规格选择图片加载失败]', this.data.product._id, this.data.product.image, e.detail)
     },
   },
 })

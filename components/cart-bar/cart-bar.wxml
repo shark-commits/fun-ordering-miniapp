@@ -1,17 +1,23 @@
-<!-- components/cart-bar/cart-bar.wxml — 底部购物车栏 -->
-<view class="cb {{isEmpty ? 'cb--empty' : ''}}" wx:if="{{!isEmpty || alwaysShow}}">
+<!-- components/cart-bar/cart-bar.wxml — 底部购物车栏（优化版） -->
+<view class="cb {{isEmpty ? 'cb--empty' : 'cb--has'}}" wx:if="{{!isEmpty || alwaysShow}}">
   <!-- 购物车图标 + 角标 -->
   <view class="cb__icon-wrap" bindtap="onTapCart">
-    <view class="cb__icon-bg">
-      <text class="cb__icon-emoji">🛒</text>
+    <view class="cb__icon-bg {{bouncing ? 'cb__icon-bg--bounce' : ''}}">
+      <text class="cb__icon-emoji">{{isEmpty ? '🛒' : '🛍️'}}</text>
     </view>
-    <view class="cb__badge" wx:if="{{totalCount > 0}}">{{totalCount > 99 ? '99+' : totalCount}}</view>
+    <view class="cb__badge {{bouncing ? 'cb__badge--pop' : ''}}" wx:if="{{totalCount > 0}}">
+      <text class="cb__badge-text">{{totalCount > 99 ? '99+' : totalCount}}</text>
+    </view>
   </view>
 
-  <!-- 价格 -->
+  <!-- 价格与状态 -->
   <view class="cb__price-wrap">
-    <text class="cb__price">¥{{totalPrice}}</text>
-    <text class="cb__tip" wx:if="{{isEmpty}}">选点好吃的吧~</text>
+    <text class="cb__price" wx:if="{{!isEmpty}}">¥{{totalPrice}}</text>
+    <view class="cb__tip-wrap" wx:if="{{isEmpty}}">
+      <text class="cb__tip-icon">✨</text>
+      <text class="cb__tip">选个喜欢的风格吧~</text>
+    </view>
+    <text class="cb__count" wx:if="{{totalCount > 0}}">{{totalCount}}件</text>
   </view>
 
   <!-- 去结算按钮 -->
@@ -21,25 +27,56 @@
 </view>
 
 <!-- 遮罩层 -->
-<view class="cb__mask" wx:if="{{showPopup}}" bindtap="onClosePopup"></view>
+<view class="cb__mask {{showPopup ? 'cb__mask--show' : ''}}" bindtap="onClosePopup"></view>
 
 <!-- 购物车弹层 -->
 <view class="cb__popup {{showPopup ? 'cb__popup--show' : ''}}">
+  <view class="cb__popup-handle"></view>
+
+  <!-- 头部 -->
   <view class="cb__popup-header">
-    <text class="cb__popup-title">已选清单</text>
-    <text class="cb__popup-clear" bindtap="onClearCart">清空</text>
+    <view class="cb__popup-header-left">
+      <text class="cb__popup-title">已选清单</text>
+      <text class="cb__popup-total">合计 ¥{{totalPrice}}</text>
+    </view>
+    <view class="cb__popup-clear" bindtap="onClearCart">
+      <text class="cb__popup-clear-icon">🗑️</text>
+      <text>清空</text>
+    </view>
   </view>
+
+  <!-- 商品列表 -->
   <scroll-view class="cb__popup-list" scroll-y>
-    <view class="cb__popup-item" wx:for="{{items}}" wx:key="cartKey">
+    <view
+      class="cb__popup-item"
+      wx:for="{{items}}"
+      wx:key="cartKey"
+      wx:for-index="idx"
+      style="animation-delay: {{idx * 0.04}}s"
+    >
       <view class="cb__popup-info">
         <text class="cb__popup-name">{{item.name}}</text>
         <text class="cb__popup-spec" wx:if="{{item.specsText}}">{{item.specsText}}</text>
       </view>
-      <text class="cb__popup-price">¥{{item.price * item.quantity}}</text>
+      <text class="cb__popup-price">¥{{item.displayPrice}}</text>
       <view class="cb__popup-ctrl">
-        <view class="cb__popup-minus" bindtap="onDecrease" data-id="{{item.productId}}" data-key="{{item.specKey}}">−</view>
+        <view
+          class="cb__popup-btn cb__popup-btn--minus"
+          catchtap="onDecrease"
+          data-id="{{item.productId}}"
+          data-key="{{item.specKey}}"
+        >
+          <text class="cb__popup-btn-icon">−</text>
+        </view>
         <text class="cb__popup-qty">{{item.quantity}}</text>
-        <view class="cb__popup-plus" bindtap="onIncrease" data-id="{{item.productId}}" data-key="{{item.specKey}}">+</view>
+        <view
+          class="cb__popup-btn cb__popup-btn--plus"
+          catchtap="onIncrease"
+          data-id="{{item.productId}}"
+          data-key="{{item.specKey}}"
+        >
+          <text class="cb__popup-btn-icon">+</text>
+        </view>
       </view>
     </view>
   </scroll-view>

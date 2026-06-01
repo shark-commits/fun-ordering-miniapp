@@ -2,11 +2,12 @@
   "pages": [
     "pages/menu/menu",
     "pages/order-confirm/order-confirm",
-    "pages/order-detail/order-detail"
+    "pages/order-detail/order-detail",
+    "pages/orders/orders"
   ],
   "window": {
     "navigationBarBackgroundColor": "#F26B5E",
-    "navigationBarTitleText": "趣味点餐",
+    "navigationBarTitleText": "趣味预约",
     "navigationBarTextStyle": "white",
     "backgroundColor": "#FEF8F5",
     "backgroundTextStyle": "dark"

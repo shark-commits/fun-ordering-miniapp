@@ -4,17 +4,18 @@ const cartStore = require('../../store/CartStore')
 
 Page({
   data: {
-    categories: [],       // [{_id, name, products: [...]}]
-    allProducts: [],      // 用于幸运推荐
+    categories: [],
+    allProducts: [],
     activeCategory: 0,
     scrollToProduct: '',
     showSkuPicker: false,
     skuProduct: null,
     searchKeyword: '',
+    showBackTop: false,
+    _scrollTimer: null,
   },
 
   onLoad() {
-    // 订阅购物车变化
     this._onCartChange = () => this.setData({ _cartUpdate: Date.now() })
     cartStore.subscribe(this._onCartChange)
     this.loadMenu()
@@ -22,9 +23,11 @@ Page({
 
   onUnload() {
     cartStore.unsubscribe(this._onCartChange)
+    if (this.data._scrollTimer) {
+      clearTimeout(this.data._scrollTimer)
+    }
   },
 
-  /** 加载菜单数据 */
   async loadMenu() {
     try {
       const data = await callCloud('getMenu', { shopId: 'default_shop' })
@@ -37,16 +40,14 @@ Page({
     }
   },
 
-  /** 点击分类 */
   onCategoryTap(e) {
     const index = e.currentTarget.dataset.index
     this.setData({
       activeCategory: index,
-      scrollToProduct: `cat-${index}`,
+      scrollToProduct: 'cat-' + index,
     })
   },
 
-  /** 搜索 */
   onSearchInput(e) {
     this.setData({ searchKeyword: e.detail.value })
   },
@@ -55,17 +56,34 @@ Page({
     // TODO: 按关键词过滤菜品
   },
 
-  /** 购物车变化回调 */
   onCartChange() {
     this.setData({ _cartUpdate: Date.now() })
   },
 
-  /** 点击商品 */
-  onTapItem(e) {
-    // 可以跳转到商品详情页（如果有的话）
+  /** 商品列表滚动 — 控制回到顶部按钮显示 */
+  onProductScroll(e) {
+    var scrollTop = e.detail.scrollTop
+    var that = this
+    if (this.data._scrollTimer) {
+      clearTimeout(this.data._scrollTimer)
+    }
+    this.data._scrollTimer = setTimeout(function () {
+      that.setData({ showBackTop: scrollTop > 400 })
+    }, 50)
   },
 
-  /** 打开规格选择器 */
+  /** 回到顶部 */
+  onBackToTop() {
+    this.setData({
+      activeCategory: 0,
+      showBackTop: false,
+    })
+    // 强行设置 scroll-into-view 为第一个分类
+    this.setData({ scrollToProduct: 'cat-0' })
+  },
+
+  onTapItem(e) {},
+
   onSelectSku(e) {
     this.setData({
       showSkuPicker: true,
@@ -81,12 +99,14 @@ Page({
     this.setData({ showSkuPicker: false, skuProduct: null })
   },
 
-  /** 去结算 */
   onCheckout() {
     wx.navigateTo({ url: '/pages/order-confirm/order-confirm' })
   },
 
-  /** 分享给好友 */
+  onGoOrders() {
+    wx.navigateTo({ url: '/pages/orders/orders' })
+  },
+
   onShareAppMessage() {
     const recommend = this.data.allProducts.length > 0
       ? this.data.allProducts[Math.floor(Math.random() * this.data.allProducts.length)]
@@ -98,7 +118,6 @@ Page({
     }
   },
 
-  /** 分享到朋友圈 */
   onShareTimeline() {
     return {
       title: '超有趣的风格预约小程序，快来看看！',

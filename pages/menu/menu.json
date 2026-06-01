@@ -5,5 +5,5 @@
     "lucky-recommend": "../../components/lucky-recommend/lucky-recommend",
     "sku-picker": "../../components/sku-picker/sku-picker"
   },
-  "navigationBarTitleText": "趣味点餐"
+  "navigationBarTitleText": "趣味预约"
 }

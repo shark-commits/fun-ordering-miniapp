@@ -11,27 +11,56 @@
       <text class="menu-search__icon">🔍</text>
       <input
         class="menu-search__input"
-        placeholder="搜搜想吃点什么..."
+        placeholder="搜索你想要的风格..."
         placeholder-style="color: #B5A59C; font-size: 26rpx;"
         confirm-type="search"
         bindinput="onSearchInput"
         bindconfirm="onSearchConfirm"
       />
     </view>
-    <button class="menu-search__share" open-type="share" aria-label="分享给好友">
-      <text class="menu-search__share-icon">📤</text>
+    <button class="menu-search__action" open-type="share" aria-label="分享给好友">
+      <text class="menu-search__action-icon">📤</text>
     </button>
+    <view class="menu-search__action" bindtap="onGoOrders" aria-label="预约记录">
+      <text class="menu-search__action-icon">📋</text>
+    </view>
   </view>
 
   <!-- ====== 今日幸运推荐 ====== -->
   <lucky-recommend
+    wx:if="{{allProducts.length > 0}}"
     products="{{allProducts}}"
     bind:cartchange="onCartChange"
     bind:selectsku="onSelectSku"
   />
 
+  <!-- ====== 骨架屏（加载中） ====== -->
+  <view class="menu-skeleton" wx:if="{{categories.length === 0}}">
+    <view class="menu-skeleton__body">
+      <view class="menu-skeleton__sidebar">
+        <view class="menu-skeleton__cat" wx:for="{{4}}" wx:key="*this"></view>
+      </view>
+      <view class="menu-skeleton__content">
+        <view class="menu-skeleton__section">
+          <view class="menu-skeleton__section-title"></view>
+          <view class="menu-skeleton__card" wx:for="{{3}}" wx:key="*this">
+            <view class="menu-skeleton__card-img"></view>
+            <view class="menu-skeleton__card-info">
+              <view class="menu-skeleton__card-line menu-skeleton__card-line--title"></view>
+              <view class="menu-skeleton__card-line menu-skeleton__card-line--desc"></view>
+              <view class="menu-skeleton__card-bottom">
+                <view class="menu-skeleton__card-line menu-skeleton__card-line--price"></view>
+                <view class="menu-skeleton__card-btn"></view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
   <!-- ====== 主内容区 ====== -->
-  <view class="menu-body">
+  <view class="menu-body" wx:if="{{categories.length > 0}}">
     <!-- 左侧分类导航 -->
     <scroll-view class="menu-categories" scroll-y scroll-into-view="cat-{{scrollToCategory}}">
       <view
@@ -60,7 +89,7 @@
           <view class="menu-products__section-line"></view>
         </view>
 
-        <!-- 商品卡片 -->
+        <!-- 商品卡片（错开入场） -->
         <menu-item
           wx:for="{{item.products}}"
           wx:for-item="product"
@@ -75,10 +104,18 @@
       <!-- 到底提示 -->
       <view class="menu-products__footer">
         <view class="menu-products__footer-line"></view>
-        <text class="menu-products__footer-text">已经到底啦</text>
+        <view class="menu-products__footer-text-wrap">
+          <text class="menu-products__footer-emoji">🌿</text>
+          <text class="menu-products__footer-text">已经到底啦</text>
+        </view>
         <view class="menu-products__footer-line"></view>
       </view>
     </scroll-view>
+  </view>
+
+  <!-- ====== 回到顶部按钮 ====== -->
+  <view class="menu-backtop {{showBackTop ? 'menu-backtop--show' : ''}}" bindtap="onBackToTop" aria-label="回到顶部">
+    <text class="menu-backtop__icon">↑</text>
   </view>
 
   <!-- ====== 底部购物车栏 ====== -->

@@ -1,12 +1,13 @@
 /* ═══════════════════════════════════════════
    pages/order-confirm/order-confirm.wxss — 订单确认页样式
+   设计：温暖治愈 × 活力玩趣
    ═══════════════════════════════════════════ */
 
 .confirm-page {
   padding-bottom: 140rpx;
   background: var(--bg-page);
   min-height: 100vh;
-  animation: floatUp 0.35s ease;
+  animation: fadeIn 0.3s ease;
 }
 
 /* ====== 页面头部 ====== */
@@ -17,6 +18,9 @@
   padding: 20rpx 24rpx;
   background: var(--bg-surface);
   border-bottom: 1rpx solid var(--border-light);
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .confirm-header__back {
@@ -46,13 +50,67 @@
   width: 56rpx;
 }
 
+/* ====== 空状态 ====== */
+.confirm-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 200rpx;
+  animation: floatUp 0.5s ease;
+}
+
+.confirm-empty__icon-wrap {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: 50%;
+  background: var(--color-primary-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-xl);
+}
+
+.confirm-empty__icon {
+  font-size: 72rpx;
+  line-height: 1;
+}
+
+.confirm-empty__title {
+  font-size: var(--text-heading);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--space-sm);
+}
+
+.confirm-empty__sub {
+  font-size: var(--text-body);
+  color: var(--text-tertiary);
+  margin-bottom: var(--space-2xl);
+}
+
+.confirm-empty__btn {
+  padding: 22rpx 72rpx;
+  background: linear-gradient(135deg, var(--color-primary) 0%, #F48C7A 100%);
+  color: var(--text-white);
+  border-radius: var(--radius-full);
+  font-size: var(--text-subhead);
+  font-weight: 600;
+  box-shadow: 0 4rpx 16rpx rgba(242, 107, 94, 0.3);
+  transition: all 0.15s ease;
+}
+
+.confirm-empty__btn:active {
+  transform: scale(0.95);
+}
+
 /* ====== 区块卡片 ====== */
 .confirm-section {
   background: var(--bg-surface);
-  margin: var(--space-md) var(--space-md) 0;
+  margin: var(--space-md) var(--space-lg) 0;
   padding: var(--space-lg);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-xl);
   box-shadow: var(--shadow-sm);
+  animation: floatUp 0.35s ease both;
 }
 
 .confirm-section--price {
@@ -85,16 +143,27 @@
   color: var(--text-tertiary);
 }
 
-/* ====== 商品列表项 ====== */
+/* ====== 商品列表项（含内联数量调节） ====== */
 .confirm-item {
   display: flex;
   align-items: center;
   padding: var(--space-sm) 0;
-  animation: floatUp 0.3s ease both;
+  animation: itemSlideIn 0.3s ease both;
 }
 
 .confirm-item:last-child {
   padding-bottom: 0;
+}
+
+@keyframes itemSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-16rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .confirm-item__image {
@@ -128,6 +197,49 @@
   margin-top: 4rpx;
 }
 
+/* 内联数量调节器 */
+.confirm-item__ctrl {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+  margin-top: var(--space-sm);
+}
+
+.confirm-item__ctrl-btn {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50%;
+  border: 2rpx solid var(--border-medium);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24rpx;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition: all 0.15s ease;
+}
+
+.confirm-item__ctrl-btn:active {
+  background: var(--border-light);
+  transform: scale(0.85);
+}
+
+.confirm-item__ctrl-btn--primary {
+  background: linear-gradient(135deg, var(--color-primary) 0%, #F48C7A 100%);
+  border: none;
+  color: var(--text-white);
+  box-shadow: 0 2rpx 8rpx rgba(242, 107, 94, 0.2);
+}
+
+.confirm-item__ctrl-qty {
+  font-size: var(--text-body);
+  color: var(--text-primary);
+  min-width: 28rpx;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* 右侧价格 */
 .confirm-item__right {
   text-align: right;
   flex-shrink: 0;
@@ -135,23 +247,73 @@
 }
 
 .confirm-item__price {
-  font-size: var(--text-body);
+  font-size: var(--text-body-bold);
   color: var(--color-primary);
-  font-weight: 600;
+  font-weight: 700;
   display: block;
 }
 
-.confirm-item__qty {
+.confirm-item__unit {
   font-size: var(--text-caption);
   color: var(--text-tertiary);
   display: block;
-  margin-top: 4rpx;
+  margin-top: 2rpx;
 }
 
-/* ====== 备注输入 ====== */
+/* ====== 快捷备注标签 ====== */
+.confirm-remark-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.confirm-remark-chips__item {
+  padding: 12rpx 28rpx;
+  border-radius: var(--radius-full);
+  background: #F5F0ED;
+  font-size: var(--text-body-sm);
+  color: var(--text-secondary);
+  transition: all 0.15s ease;
+}
+
+.confirm-remark-chips__item:active {
+  transform: scale(0.95);
+}
+
+.confirm-remark-chips__item--active {
+  background: var(--color-primary-bg);
+  color: var(--color-primary-dark);
+  border: 2rpx solid var(--color-primary);
+  font-weight: 600;
+}
+
+/* ====== 自定义备注区 ====== */
+.confirm-remark-section {
+  border-top: 1rpx solid var(--border-light);
+  padding-top: var(--space-md);
+}
+
+.confirm-remark-section__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-sm);
+}
+
+.confirm-remark-section__label {
+  font-size: var(--text-body-sm);
+  color: var(--text-secondary);
+}
+
+.confirm-remark-section__count {
+  font-size: var(--text-caption);
+  color: var(--text-tertiary);
+}
+
 .confirm-remark {
   width: 100%;
-  height: 140rpx;
+  height: 120rpx;
   font-size: var(--text-body);
   padding: var(--space-md);
   background: #F5F0ED;
@@ -191,7 +353,7 @@
 
 .confirm-price-divider {
   height: 1rpx;
-  background: var(--border-light);
+  background: linear-gradient(to right, transparent, var(--border-light), transparent);
   margin: var(--space-sm) 0;
 }
 

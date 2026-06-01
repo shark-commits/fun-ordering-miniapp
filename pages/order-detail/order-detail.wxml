@@ -7,11 +7,19 @@
 
   <!-- ====== 支付成功状态 ====== -->
   <view class="detail-success" wx:if="{{paid}}">
+    <view class="detail-success__deco detail-success__deco--1"></view>
+    <view class="detail-success__deco detail-success__deco--2"></view>
+    <view class="detail-success__deco detail-success__deco--3"></view>
     <view class="detail-success__icon-wrap">
       <view class="detail-success__icon">✓</view>
     </view>
     <text class="detail-success__text">预约成功！</text>
     <text class="detail-success__sub">正在为你安排中~</text>
+    <!-- 等待时长预估 -->
+    <view class="detail-success__wait" wx:if="{{estimatedWait}}">
+      <view class="detail-success__wait-icon">⏱️</view>
+      <text class="detail-success__wait-text">预计等待 <text class="detail-success__wait-time">{{estimatedWait}}</text></text>
+    </view>
   </view>
 
   <!-- ====== 订单信息卡片 ====== -->
@@ -42,21 +50,72 @@
       <text class="detail-remark__label">💬 备注</text>
       <text class="detail-remark__text">{{order.remark}}</text>
     </view>
+  </view>
 
-    <!-- 分隔线 -->
-    <view class="detail-divider"></view>
+  <!-- ====== 订单进度时间线 ====== -->
+  <view class="detail-card" wx:if="{{paid || order.status}}">
+    <view class="detail-timeline">
+      <view class="detail-timeline__header">
+        <text class="detail-timeline__title">📌 订单进度</text>
+      </view>
+      <view class="detail-timeline__steps">
+        <!-- 步骤1: 已提交 -->
+        <view class="detail-timeline__step detail-timeline__step--done">
+          <view class="detail-timeline__step-icon-wrap">
+            <view class="detail-timeline__step-icon">✓</view>
+          </view>
+          <view class="detail-timeline__step-info">
+            <text class="detail-timeline__step-title">已提交</text>
+            <text class="detail-timeline__step-time">{{order.createTime || '刚刚'}}</text>
+          </view>
+        </view>
 
-    <!-- 实付金额 -->
-    <view class="detail-total">
-      <text class="detail-total__label">实付金额</text>
-      <text class="detail-total__price">¥{{order.totalPrice}}</text>
+        <!-- 步骤2: 已确认 -->
+        <view class="detail-timeline__step {{order.status !== 'pending' ? 'detail-timeline__step--done' : 'detail-timeline__step--active'}}">
+          <view class="detail-timeline__step-icon-wrap">
+            <view class="detail-timeline__step-ring">
+              <text class="detail-timeline__step-ring-dot"></text>
+            </view>
+          </view>
+          <view class="detail-timeline__step-info">
+            <text class="detail-timeline__step-title">已确认</text>
+            <text class="detail-timeline__step-time">{{order.status !== 'pending' ? order.confirmTime || '-' : '等待中...'}}</text>
+          </view>
+        </view>
+
+        <!-- 步骤3: 制作中 -->
+        <view class="detail-timeline__step {{order.status === 'done' ? 'detail-timeline__step--done' : ''}}">
+          <view class="detail-timeline__step-icon-wrap">
+            <view class="detail-timeline__step-ring">
+              <text class="detail-timeline__step-ring-dot"></text>
+            </view>
+          </view>
+          <view class="detail-timeline__step-info">
+            <text class="detail-timeline__step-title">服务中</text>
+            <text class="detail-timeline__step-time">{{order.status === 'done' ? order.doneTime || '-' : '服务即将开始'}}</text>
+          </view>
+        </view>
+
+        <!-- 步骤4: 已完成 -->
+        <view class="detail-timeline__step {{order.status === 'done' ? 'detail-timeline__step--done' : ''}}">
+          <view class="detail-timeline__step-icon-wrap">
+            <view class="detail-timeline__step-ring">
+              <text class="detail-timeline__step-ring-dot"></text>
+            </view>
+          </view>
+          <view class="detail-timeline__step-info">
+            <text class="detail-timeline__step-title">已完成</text>
+            <text class="detail-timeline__step-time">{{order.status === 'done' ? order.doneTime || '-' : '待完成'}}</text>
+          </view>
+        </view>
+      </view>
     </view>
   </view>
 
   <!-- ====== 时间信息 ====== -->
   <view class="detail-card" wx:if="{{order.createTime}}">
     <view class="detail-time">
-      <text class="detail-time__label">🕐 下单时间</text>
+      <text class="detail-time__label">🕐 预约时间</text>
       <text class="detail-time__value">{{order.createTime}}</text>
     </view>
   </view>

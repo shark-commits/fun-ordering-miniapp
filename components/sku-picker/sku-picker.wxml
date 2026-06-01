@@ -6,7 +6,7 @@
 
   <!-- 商品头部 -->
   <view class="sku-picker__header">
-    <image class="sku-picker__image" src="{{product.image}}" mode="aspectFill" />
+    <image class="sku-picker__image" src="{{product.image}}" mode="aspectFill" binderror="onImageError" />
     <view class="sku-picker__header-info">
       <text class="sku-picker__name">{{product.name}}</text>
       <text class="sku-picker__price">¥{{currentPrice || product.price}}</text>
@@ -16,7 +16,7 @@
 
   <!-- 规格选择 -->
   <scroll-view class="sku-picker__body" scroll-y>
-    <view class="sku-picker__group" wx:for="{{product.skus}}" wx:for-item="skuGroup" wx:for-index="groupIdx" wx:key="name">
+    <view class="sku-picker__group" wx:for="{{product.specs}}" wx:for-item="skuGroup" wx:for-index="groupIdx" wx:key="name">
       <text class="sku-picker__group-name">{{skuGroup.name}}</text>
       <view class="sku-picker__options">
         <view

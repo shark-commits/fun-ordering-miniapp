@@ -1,0 +1,80 @@
+<!-- ═══════════════════════════════════════════
+   pages/orders/orders.wxml — 预约记录页
+   设计语言：温馨治愈 × 活力玩趣
+   ═══════════════════════════════════════════ -->
+
+<view class="orders-page">
+
+  <!-- ====== 页面头部 ====== -->
+  <view class="orders-header">
+    <view class="orders-header__back" bindtap="onBack" aria-label="返回">
+      <text class="orders-header__back-icon">←</text>
+    </view>
+    <text class="orders-header__title">预约记录</text>
+    <view class="orders-header__spacer"></view>
+  </view>
+
+  <!-- ====== 空状态 ====== -->
+  <view class="orders-empty" wx:if="{{orders.length === 0}}">
+    <view class="orders-empty__icon-wrap">
+      <text class="orders-empty__icon">📭</text>
+    </view>
+    <text class="orders-empty__title">还没有预约记录</text>
+    <text class="orders-empty__sub">去选一个喜欢的风格吧~</text>
+    <view class="orders-empty__btn" bindtap="onGoMenu">
+      <text>去逛逛</text>
+    </view>
+  </view>
+
+  <!-- ====== 订单列表 ====== -->
+  <view class="orders-list" wx:if="{{orders.length > 0}}">
+    <view
+      class="orders-card"
+      wx:for="{{orders}}"
+      wx:key="orderId"
+      data-id="{{item.orderId}}"
+      bindtap="onTapOrder"
+      style="animation-delay: {{index * 0.06}}s"
+    >
+      <!-- 订单头部 -->
+      <view class="orders-card__header">
+        <view class="orders-card__no-wrap">
+          <text class="orders-card__no-label">订单</text>
+          <text class="orders-card__no">{{item.orderNo}}</text>
+        </view>
+        <view class="orders-card__status">
+          <view class="orders-card__status-dot"></view>
+          <text>{{item.statusText || '安排中'}}</text>
+        </view>
+      </view>
+
+      <!-- 商品列表 -->
+      <view class="orders-card__items">
+        <view class="orders-card__item" wx:for="{{item.items}}" wx:key="name" wx:for-item="sub">
+          <view class="orders-card__item-left">
+            <text class="orders-card__item-dot">·</text>
+            <text class="orders-card__item-name">{{sub.name}}</text>
+          </view>
+          <text class="orders-card__item-price">¥{{sub.price}} × {{sub.quantity}}</text>
+        </view>
+      </view>
+
+      <!-- 底部 -->
+      <view class="orders-card__footer">
+        <view class="orders-card__time-wrap">
+          <text class="orders-card__time-icon">🕐</text>
+          <text class="orders-card__time">{{item.createTime}}</text>
+        </view>
+        <text class="orders-card__total">合计 <text class="orders-card__total-price">¥{{item.totalPrice}}</text></text>
+      </view>
+    </view>
+
+    <!-- 到底提示 -->
+    <view class="orders-footer">
+      <view class="orders-footer__line"></view>
+      <text class="orders-footer__text">已显示全部记录</text>
+      <view class="orders-footer__line"></view>
+    </view>
+  </view>
+
+</view>

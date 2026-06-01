@@ -1,18 +1,8 @@
-// app.js — 趣味点餐小程序入口
-var mockConfig = require('./utils/request')
+// app.js — 趣味预约小程序入口
 
 App({
   onLaunch() {
-    // 云开发未开通时跳过初始化，避免超时
-    if (!mockConfig.MOCK_ENABLED) {
-      if (!wx.cloud) {
-        console.error('请使用 2.2.3 或以上的基础库以使用云能力')
-      } else {
-        wx.cloud.init({
-          traceUser: true,
-        })
-      }
-    }
+    // 使用本地后端，不启用云开发
     this.globalData = {}
   },
 

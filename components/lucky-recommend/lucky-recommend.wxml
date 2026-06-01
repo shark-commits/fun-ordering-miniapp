@@ -15,7 +15,7 @@
   <!-- 推荐卡片 -->
   <view class="lucky__card {{animating ? 'lucky__card--spin' : ''}}">
     <view class="lucky__card-bg"></view>
-    <image class="lucky__image" src="{{current.image}}" mode="aspectFill" />
+    <image class="lucky__image" src="{{current.image}}" mode="aspectFill" binderror="onImageError" />
     <view class="lucky__info">
       <view class="lucky__tag">💡 推荐</view>
       <text class="lucky__name">{{current.name}}</text>

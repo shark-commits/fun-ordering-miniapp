@@ -90,6 +90,35 @@ const cartStore = {
     this._notify()
   },
 
+  /** 获取单个商品项 */
+  getItem(productId, specKey = '') {
+    return this.items.find(
+      (item) => item.productId === productId && item.specKey === specKey
+    ) || null
+  },
+
+  /** 更新指定商品数量 */
+  updateQuantity(productId, specKey = '', quantity) {
+    const item = this.items.find(
+      (item) => item.productId === productId && item.specKey === specKey
+    )
+    if (item) {
+      item.quantity = quantity
+      this._notify()
+    }
+  },
+
+  /** 移除指定商品 */
+  removeItem(productId, specKey = '') {
+    const index = this.items.findIndex(
+      (item) => item.productId === productId && item.specKey === specKey
+    )
+    if (index !== -1) {
+      this.items.splice(index, 1)
+      this._notify()
+    }
+  },
+
   /** 清空购物车 */
   clearCart() {
     this.items = []

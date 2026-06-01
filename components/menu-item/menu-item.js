@@ -38,7 +38,7 @@ Component({
     onAdd() {
       const product = this.data.product
       // 有规格则弹出规格选择器
-      if (product.skus && product.skus.length > 0) {
+      if (product.specs && product.specs.length > 0) {
         this.triggerEvent('selectsku', { product })
         return
       }
@@ -46,8 +46,8 @@ Component({
       this.updateQuantity()
       this.triggerEvent('cartchange')
 
-      // 加购弹跳动画
-      this.animate('.menu-item__add', [
+      // 加购弹跳动画（新命名）
+      this.animate('.mi-card__add', [
         { transform: 'scale(1)' },
         { transform: 'scale(1.3)' },
         { transform: 'scale(1)' },
@@ -63,6 +63,10 @@ Component({
 
     onTap() {
       this.triggerEvent('tapitem', { product: this.data.product })
+    },
+
+    onImageError(e) {
+      console.error('[图片加载失败]', this.data.product._id, this.data.product.image, e.detail)
     },
   },
 })

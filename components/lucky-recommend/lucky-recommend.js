@@ -53,13 +53,17 @@ Component({
     onAdd(e) {
       // 阻止冒泡触发 onShuffle
       const product = this.data.current
-      if (product.skus && product.skus.length > 0) {
+      if (product.specs && product.specs.length > 0) {
         this.triggerEvent('selectsku', { product })
         return
       }
       cartStore.addItem(product, null)
       wx.showToast({ title: '已加入~', icon: 'none', duration: 800 })
       this.triggerEvent('cartchange')
+    },
+
+    onImageError(e) {
+      console.error('[幸运推荐图片加载失败]', this.data.current._id, this.data.current.image, e.detail)
     },
   },
 })

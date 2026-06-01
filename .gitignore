@@ -1,14 +1,17 @@
-# Windows
-[Dd]esktop.ini
-Thumbs.db
-$RECYCLE.BIN/
+# 项目配置
+project.config.json
+project.private.config.json
 
-# macOS
-.DS_Store
-.fseventsd
-.Spotlight-V100
-.TemporaryItems
-.Trashes
+# 工作目录
+.workbuddy/
 
-# Node.js
+# 依赖
 node_modules/
+
+# 云函数依赖（仅保留代码，不提交依赖）
+cloudfunctions/*/node_modules/
+
+# 系统
+.DS_Store
+Thumbs.db
+*.log

@@ -1,5 +1,5 @@
 {
-  "description": "趣味点餐小程序",
+  "description": "趣味预约小程序",
   "packOptions": {
     "ignore": [],
     "include": []
@@ -42,7 +42,7 @@
   },
   "compileType": "miniprogram",
   "libVersion": "3.3.4",
-  "appid": "wx03237f41fadc22f6",
+  "appid": "wx1e6115078f054a93",
   "projectname": "fun-order-miniapp",
   "condition": {},
   "cloudfunctionTemplateRoot": "",
